@@ -1,1 +1,28 @@
-# User-management
+--------------- # User Management -------------------
+
+## 1. Login Functionality:
+------------------------
+ -> Creadentials are verified.
+ -> If account is locked user can`t login.
+ -> If acocount is unlock then user can login.
+ 
+## 2.Registration Functionality
+ -------------------------------
+ -> Registration form should contain client side validation.
+ -> Email should be unique.
+ -> WWhen user click on "Register", them a random password should be generated and stored in db.
+ -> After inserting record send an email to unlock the account.
+ 
+ ## 3. Unlock Account functionality
+ --------------------------------
+ 
+ -> When user click on link sent in Email, user should land on new page.
+ -> User should enter temporary password, sent in email and use new apssword.
+ -> If temporary password is correct, then user should be updated with new password
+ -> After unlocking the account, display a success message and proceed to login.
+
+## 4. Forget Password functionality
+---------------------------------
+
+ 
+
