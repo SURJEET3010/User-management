@@ -3,21 +3,30 @@ package com.usm.serviceImpl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.usm.bindings.User;
+import com.usm.constants.Constants;
 import com.usm.entity.CityEntity;
 import com.usm.entity.CountryEntity;
 import com.usm.entity.StateEntity;
 import com.usm.entity.UserEntity;
+import com.usm.exceptions.RegAppExcetion;
+import com.usm.prop.AppProperties;
 import com.usm.repositories.CityRepository;
 import com.usm.repositories.CountryRepsitory;
 import com.usm.repositories.StateRepository;
 import com.usm.repositories.UserRepository;
 import com.usm.service.RegistrationService;
+import com.usm.util.EmailUtils;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
@@ -33,6 +42,13 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 	@Autowired
 	private CityRepository cityRepo;
+	
+	@Autowired
+	private EmailUtils emailUtil;
+	
+	@Autowired
+	private AppProperties appProperties;
+	
 	
 	@Override
 	public boolean checkUniqueEmail(String email) {
@@ -98,11 +114,59 @@ public class RegistrationServiceImpl implements RegistrationService {
 	}
 	
 	private String getTempPassword() {
-
-		return null;
+		
+		int leftLimit = 48;
+		int rightLimit = 122;
+		int targetPasswordLength = 8;
+		Random random = new Random();
+		String generatedPassword = random.ints(leftLimit, rightLimit+1)
+				.filter(i->(i <=57 || i>= 65) && (i<=90 || i>=97))
+				.limit(targetPasswordLength)
+				.collect(StringBuilder::new, StringBuilder:: appendCodePoint, StringBuilder::append)
+				.toString();
+		
+		return generatedPassword;
 	}
 
 	private boolean sendRegistrationEmail(User user) {
-		return false;
+		 boolean emailSent = false;
+		 
+		 try {
+			/* Taking the data from yml file */
+			 Map<String, String> messages = appProperties.getMessages();
+			 String subject = messages.get("regMailSubject");
+			 String body = readMailBody("regMailBodyFile",user);
+			 
+			 //String body ="<h1> Hello {user.getName()} !</h1> <br> Your temporary password is " + "";
+			 emailSent = emailUtil.sendMail(user.getEmail(), body, subject);
+		} catch (Exception e) {
+			
+			throw new RegAppExcetion(e.getMessage());
+		} 
+		return emailSent;
 	}
+	
+	public String readMailBody(String filename, User user) {
+		
+		String mailBody = null;
+		StringBuffer buffer = new StringBuffer();
+		
+		Path path = Paths.get(filename);
+		
+		try(Stream<String> stream = Files.lines(path)){
+			stream.forEach(line->{
+				buffer.append(line);
+			});
+			
+			mailBody = buffer.toString();
+			mailBody = mailBody.replace(Constants.FNAME, user.getFirstname());
+			mailBody = mailBody.replace(Constants.LNAME, user.getLastname());
+			mailBody = mailBody.replace(Constants.TEMP_PWD, user.getPassword());
+			mailBody = mailBody.replace(Constants.EMAIL, user.getEmail());
+		}catch(Exception e) {
+			throw new RegAppExcetion(e.getCause());
+		}
+		return mailBody;
+	}
+	
 }

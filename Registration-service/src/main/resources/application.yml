@@ -1,0 +1,5 @@
+
+reg-app:
+ messages:
+  regMailSubject : User Registration Successful
+  regMailBodyFile: emailTemplate.txt

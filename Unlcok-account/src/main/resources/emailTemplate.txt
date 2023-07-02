@@ -1,0 +1,15 @@
+
+Hi {FNAME},
+<br>
+
+Welcome ! Your registration is almost completed.
+Please use below details to unlock your account.
+<br>
+
+Temporary Password : {TEMP_PWD} <br>
+<a href="http://localhost:9000/unlockAcc?email={EMAIL}">
+
+Click here to unlock your account </a> <br>
+
+Thanks & Regards, <br>
+XYZ

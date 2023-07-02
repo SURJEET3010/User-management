@@ -12,12 +12,12 @@ import lombok.Data;
 public class CityEntity {
 
 	@Id 
-	@Column(name="CITY_ID")
+	@Column(name="city_id")
 	private String cityId;
 	
-	@Column(name="CITY_NAME")
+	@Column(name="city_name")
 	private String cityName;
 	
-	@Column(name="STATE_ID")
+	@Column(name="state_id")
 	private String stateId;
 }

@@ -1,13 +1,15 @@
 package com.usm.entity;
 
+
 import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -20,12 +22,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name="USER_DETAIL")
+@Table(name="user_detail")
 public class UserEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="User_id")
+//	@GeneratedValue(generator = CustomIdGenerator.GENERATOR_NAME)
+//	@GenericGenerator(name = CustomIdGenerator.GENERATOR_NAME, strategy = "com.ums.entity.CustomIdGenerator", parameters = {
+//	@Parameter(name = CustomIdGenerator.PREFIX_PARAM, value = "USR00") })
+	
+	@Column(name="user_id")
 	private String userId;
 	
 	@Column(name="user_firstname")

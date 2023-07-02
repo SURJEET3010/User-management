@@ -1,0 +1,12 @@
+
+Hi {FNAME},
+<br>
+
+Welcome ! Your registration is almost completed.
+Please use below details to unlock your account.
+<br>
+
+Password : {PWD} <br>
+
+Thanks & Regards, <br>
+XYZ

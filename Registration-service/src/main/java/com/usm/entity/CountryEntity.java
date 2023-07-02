@@ -12,10 +12,10 @@ import lombok.Data;
 public class CountryEntity {
 	
 	@Id
-	@Column(name="COUNTRY_ID")
+	@Column(name="country_id")
 	private String countryId;
 	
-	@Column(name="COUNTRY_NAME")
+	@Column(name="country_name")
 	private String countryName;
 	
 }

@@ -8,16 +8,16 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="State")
+@Table(name="state")
 public class StateEntity {
 
 	@Id
-	@Column(name="STATE_ID")
+	@Column(name="state_id")
 	private String stateId;
 	
-	@Column(name="STATE_NAME")
+	@Column(name="state_name")
 	private String stateName;
 	
-	@Column(name="CUNTRY_ID")
+	@Column(name="country_id")
 	private String countryId;
 }

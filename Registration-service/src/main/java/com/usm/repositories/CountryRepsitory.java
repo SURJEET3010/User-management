@@ -1,4 +1,4 @@
-package com.usm.repositories;
+ package com.usm.repositories;
 
 import java.io.Serializable;
 
@@ -9,5 +9,5 @@ import com.usm.entity.CountryEntity;
 
 @Repository
 public interface CountryRepsitory  extends JpaRepository<CountryEntity, Serializable> {
-
+	
 }
